@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.pelayovv</groupId>
-	<artifactId>tarea3DWES</artifactId>
+	<artifactId>tarea3DWESpelayovv20</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>tarea3DWES</name>
+	<name>tarea3DWESpelayovv20</name>
 	<description>Tarea 3 DWES 2ºDAW</description>
 	<url/>
 	<licenses>
