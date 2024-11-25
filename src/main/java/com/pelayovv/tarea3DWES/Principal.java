@@ -18,6 +18,10 @@ public class Principal implements CommandLineRunner {
 		
 		Planta p = new Planta();
 		servPlanta.validarPlanta(p);
+		
+		servPlanta.insertarPlanta(p);
+		
+		
 		System.out.println("-------------------");
 		
 		
