@@ -12,12 +12,16 @@ public class ServiciosPlanta {
 	@Autowired
 	PlantaRepository plantarepo;
 	
+	
+	
 	public boolean validarPlanta(Planta p) {
 		return true;
 	}
 	
 	public void insertarPlanta(Planta p) {
-		plantarepo.saveAndFlush(p);
+		plantarepo.save(p);
 	}
+	
+	
 	
 }
