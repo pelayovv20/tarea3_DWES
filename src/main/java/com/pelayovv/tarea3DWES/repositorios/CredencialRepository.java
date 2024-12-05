@@ -1,5 +1,11 @@
 package com.pelayovv.tarea3DWES.repositorios;
 
-public class CredencialRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.pelayovv.tarea3DWES.modelo.Credencial;
+
+@Repository
+public interface CredencialRepository extends JpaRepository<Credencial,Long>{
 
 }

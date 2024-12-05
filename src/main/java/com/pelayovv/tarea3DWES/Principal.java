@@ -8,11 +8,11 @@ import com.pelayovv.tarea3DWES.vista.ViveroFachada;
 
 public class Principal implements CommandLineRunner {
 	@Autowired
-	ViveroFachada viverofachada;
+	private ViveroFachada viveroFachada;
 
 	@Override
 	public void run(String... args) throws Exception {
-		//viveroFachada.menuInvitado;
+		viveroFachada.menuInicial();
 		
 	}
 
