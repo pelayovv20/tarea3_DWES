@@ -29,17 +29,17 @@ public class ServiciosMensaje {
         mensajerepo.saveAndFlush(m);
     }
 	
-	 public ArrayList<Mensaje> verMensajesPorPlanta(String codigoPlanta) {
+	 public ArrayList<Mensaje> verMensajesPlanta(String codigoPlanta) {
 	        List<Mensaje> mensajes = mensajerepo.findMensajesByPlanta(codigoPlanta);
 	        return new ArrayList<Mensaje>(mensajes);
 	    }
 	 
-	 public ArrayList<Mensaje> verMensajesPorEjemplar(long idEjemplar) {
+	 public ArrayList<Mensaje> verMensajesEjemplar(long idEjemplar) {
 	        List<Mensaje> mensajes = mensajerepo.findMensajesByEjemplar(idEjemplar);
 	        return new ArrayList<Mensaje>(mensajes);
 	    }
 	 
-	 public ArrayList<Mensaje> verMensajesPorPersona(long idPersona) {
+	 public ArrayList<Mensaje> verMensajesPersona(long idPersona) {
 	        List<Mensaje> mensajes = mensajerepo.findMensajesByPersona(idPersona);
 	        return new ArrayList<Mensaje>(mensajes);
 	    }
