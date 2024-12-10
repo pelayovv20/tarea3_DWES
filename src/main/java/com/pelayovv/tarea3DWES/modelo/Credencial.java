@@ -3,6 +3,8 @@ package com.pelayovv.tarea3DWES.modelo;
 import java.io.Serializable;
 import java.util.Objects;
 
+import org.springframework.lang.NonNull;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,10 +24,12 @@ public class Credencial implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique=true,nullable=false)
+	@Column(unique=true)
+	@NonNull
 	private String usuario;
 	
-	@Column(nullable=false)
+	@Column
+	@NonNull
 	private String password;
 	
 	@OneToOne

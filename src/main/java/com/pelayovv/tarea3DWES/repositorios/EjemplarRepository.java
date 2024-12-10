@@ -13,12 +13,13 @@ import com.pelayovv.tarea3DWES.modelo.Ejemplar;
 import jakarta.transaction.Transactional;
 
 @Repository
+
 public interface EjemplarRepository extends JpaRepository <Ejemplar, Long> {
 
 	@Transactional
 	@Modifying
 	@Query("UPDATE Ejemplar e SET e.nombre = :nombre WHERE e.id = :idejemplar")
-	int cambiarNombreEjemplar(@Param("idejemplar") Long idejemplar, @Param("nombre") String nombre);
+	boolean cambiarNombreEjemplar(@Param("idejemplar") Long idejemplar, @Param("nombre") String nombre);
 	
 	@Query("SELECT e FROM Ejemplar e WHERE e.planta.codigo = :codigoplanta")
 	List<Ejemplar> ejemplaresPorTipoPlanta(@Param("codigoplanta") String codigoPlanta);

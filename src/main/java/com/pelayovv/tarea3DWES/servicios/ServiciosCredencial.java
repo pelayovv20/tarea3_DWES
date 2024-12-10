@@ -29,7 +29,7 @@ public boolean validarCredencial(Credencial c) {
 }
 
 public boolean autenticarUsuario(String usuario, String password) {
-    return credencialrepo.existsByUsuarioAndPassword(usuario, password);
+    return credencialrepo.usuarioExistente(usuario, password);
     }
 
 public boolean existeUsuario(String usuario) {

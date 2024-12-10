@@ -33,10 +33,14 @@ public class ServiciosEjemplar {
         return ejemplares.orElse(null);
     }
 	
-	 @Transactional
+	 
 	    public boolean cambiarNombreEjemplar(long idejemplar, String nombre) {
-	        int nombrenuevo = ejemplarrepo.cambiarNombreEjemplar(idejemplar, nombre);
-	        return nombrenuevo > 0;
+	        boolean nombrenuevo = ejemplarrepo.cambiarNombreEjemplar(idejemplar, nombre);
+	        if (nombrenuevo=false) {
+	        	return false;
+	        }
+			return nombrenuevo;
+	        
 	    }
 	 
 	 public ArrayList<Ejemplar> ejemplaresPorTipoPlanta(String codigo) {

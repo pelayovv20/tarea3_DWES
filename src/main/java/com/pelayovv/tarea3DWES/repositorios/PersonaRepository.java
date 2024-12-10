@@ -7,15 +7,18 @@ import org.springframework.stereotype.Repository;
 
 import com.pelayovv.tarea3DWES.modelo.Persona;
 
+import jakarta.transaction.Transactional;
+
 @Repository
+
 public interface PersonaRepository extends JpaRepository<Persona, Long>{
 
-	
+	@Transactional
 	@Query("SELECT c.persona.id FROM Credenciales c WHERE c.usuario = :usuario")
 	Long personaAutenticada(@Param("usuario") String usuario);
 	
-	Persona findByNombre(String nombre);
+	Persona verPorNombre(String nombre);
 	
-	boolean existsByEmail(String email);
+	boolean emailExistente(String email);
 	
 }

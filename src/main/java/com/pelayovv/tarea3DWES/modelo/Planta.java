@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.lang.NonNull;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,10 +27,14 @@ public class Planta implements Serializable {
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(unique=true,nullable=false)
+	
+	@Column(unique=true)
+	@NonNull
 	private String codigo;
 	
-	@Column(nullable=false)
+	
+	@Column
+	@NonNull
 	private String nombrecomun;
 	
 	@Column

@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.lang.NonNull;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,10 +27,12 @@ public class Persona implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(nullable=false)
+	@Column
+	@NonNull
 	private String nombre;
 
-	@Column(unique = true,nullable=false)
+	@Column(unique = true)
+	@NonNull
 	private String email;
 	
 	@OneToOne(mappedBy = "persona", cascade= CascadeType.ALL)

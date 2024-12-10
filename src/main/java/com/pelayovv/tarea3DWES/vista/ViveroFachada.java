@@ -3,6 +3,7 @@ package com.pelayovv.tarea3DWES.vista;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -320,7 +321,7 @@ public class ViveroFachada {
 					verEjemplares();
 					break;
 				case 2:
-					insertarEjemplarMensaje();
+					//insertarEjemplarMensaje();
 					break;
 				case 3:
 					System.out.println("Volviendo al menú principal");
@@ -355,7 +356,7 @@ public class ViveroFachada {
 
 					break;
 				case 2:
-					insertarPersonaCredencial();
+					//insertarPersonaCredencial();
 
 					break;
 				case 3:
@@ -390,7 +391,7 @@ public class ViveroFachada {
 					menuVerMensajes();
 					break;
 				case 2:
-					insertarMensaje();
+					//insertarMensaje();
 					break;
 				case 3:
 					System.out.println("Saliendo del menú de Mensajes");
@@ -500,164 +501,164 @@ public class ViveroFachada {
 	 * Método para insertar un ejemplar con su mensaje correspondiente
 	 * 
 	 */
-	public Ejemplar insertarEjemplarMensaje() {
-		Scanner in = new Scanner(System.in);
-		Ejemplar e;
-		Mensaje m;
-		boolean correcto = false;
-		boolean validarPlanta = false;
-		do {
-			e = new Ejemplar();
-			System.out.println("Codigo de planta");
-			String codigoPlanta = in.nextLine().trim().toUpperCase();
-			validarPlanta = servPlanta.existeCodigo(codigoPlanta);
-			if (validarPlanta == true) {
-				e.setid_planta(codigoPlanta);
-				e.setNombre(codigoPlanta);
-				correcto = true;
-
-			} else if (validarPlanta == false) {
-				System.out.println("Codigo de planta incorrecto");
-				continue;
-			}
-		} while (!correcto);
-		long idEjemplar = servEjemplar.insertarEjemplar(e);
-		if (idEjemplar > 0) {
-			e.setId(idEjemplar);
-			e.setNombre(e.getId_planta() + "_" + idEjemplar);
-			controlador.getServiciosEjemplar().cambiarNombre(e.getId(), e.getNombre());
-			String mensaje = "Añadido el ejemplar " + e.getNombre();
-			LocalDateTime fechaHora = LocalDateTime.now();
-			String usuarioActual = controlador.getUsuarioActual();
-			long idUsuario = controlador.getServiciosPersona().personaAutenticada(usuarioActual);
-			m = new Mensaje(fechaHora, mensaje, idEjemplar, idUsuario);
-			if (controlador.getServiciosMensaje().insertar(m) > 0) {
-				System.out.println("Mensaje añadido correctamente.");
-			} else {
-				System.out.println("No se pudo añadir el mensaje asociado al ejemplar.");
-			}
-		} else {
-			System.out.println("Error al insertar el ejemplar en la base de datos.");
-		}
-
-		return e;
-	}
+//	public Ejemplar insertarEjemplarMensaje() {
+//		Scanner in = new Scanner(System.in);
+//		Ejemplar e;
+//		Mensaje m;
+//		boolean correcto = false;
+//		boolean validarPlanta = false;
+//		do {
+//			e = new Ejemplar();
+//			System.out.println("Codigo de planta");
+//			String codigoPlanta = in.nextLine().trim().toUpperCase();
+//			validarPlanta = servPlanta.existeCodigo(codigoPlanta);
+//			if (validarPlanta == true) {
+//				e.getPlanta().setCodigo(codigoPlanta);
+//				e.setNombre(codigoPlanta);
+//				correcto = true;
+//
+//			} else if (validarPlanta == false) {
+//				System.out.println("Codigo de planta incorrecto");
+//				continue;
+//			}
+//		} while (!correcto);
+//		 servEjemplar.insertarEjemplar(e);
+//		if (idEjemplar > 0) {
+//			e.setId(idEjemplar);
+//			e.setNombre(e.getId_planta() + "_" + idEjemplar);
+//			servEjemplar.cambiarNombreEjemplar(e.getId(), e.getNombre());
+//			String mensaje = "Añadido el ejemplar " + e.getNombre();
+//			LocalDateTime fechaHora = LocalDateTime.now();
+//			String usuarioActual = controlador.getUsuarioActual();
+//			long idUsuario = controlador.getServiciosPersona().personaAutenticada(usuarioActual);
+//			m = new Mensaje(fechaHora, mensaje, idEjemplar, idUsuario);
+//			if (servMensaje.insertarMensaje(m) > 0) {
+//				System.out.println("Mensaje añadido correctamente.");
+//			} else {
+//				System.out.println("No se pudo añadir el mensaje asociado al ejemplar.");
+//			}
+//		} else {
+//			System.out.println("Error al insertar el ejemplar en la base de datos.");
+//		}
+//
+//		return e;
+//	}
 
 	/**
 	 * Método para insertar una persona con sus credenciales correspondientes
 	 * 
 	 */
-	public Persona insertarPersonaCredencial() {
-		Scanner in = new Scanner(System.in);
-		Persona p;
-		Credencial c;
-		boolean validarPersona = false;
-		boolean validarCredencial = false;
-		String usuario = "";
-		String contraseña = "";
-
-		p = new Persona();
-
-		do {
-			System.out.println("Nombre");
-			String nombre = in.nextLine().trim();
-			p.setNombre(nombre);
-			System.out.println("Email");
-			String email = in.nextLine();
-			p.setEmail(email);
-			validarPersona = servPersona.validarPersona(p);
-			if (validarPersona == false) {
-				System.out.println("Nombre o email incorrectos");
-			}
-
-		} while (!validarPersona);
-		long idPersona = servPersona.insertarPersona(p);
-
-		c = new Credencial();
-		do {
-			System.out.println("Usuario");
-			usuario = in.nextLine().trim();
-			c.setUsuario(usuario);
-			boolean validarContraseña = false;
-			do {
-				System.out.println("Contraseña");
-				contraseña = in.nextLine().trim();
-				validarContraseña = controlador.getServiciosCredencial().validarContraseña(contraseña);
-				if (validarContraseña == false) {
-					System.out.println(
-							"La contraseña debe tener como mínimo 8 caractéres y que no tenga espacios en blanco");
-				}
-			} while (!validarContraseña);
-			c.setPassword(contraseña);
-			validarCredencial = Controlador.getServicios().getServiciosCredencial().validarCredencial(c);
-			if (validarCredencial == false) {
-				System.out.println("Usuario o contraseña incorrecto");
-			}
-		} while (!validarCredencial);
-
-		if (idPersona > 0) {
-			c.setId_persona(idPersona);
-			int insertar = controlador.getServiciosCredencial().insertar(usuario, contraseña, idPersona);
-			if (insertar > 0) {
-				System.out.println("Persona creada");
-				System.out.println("Mensaje creado");
-			} else {
-				System.out.println("Error al insertar las credenciales");
-			}
-		} else {
-			System.out.println("Error al insertar la persona");
-		}
-
-		return p;
-	}
+//	public Persona insertarPersonaCredencial() {
+//		Scanner in = new Scanner(System.in);
+//		Persona p;
+//		Credencial c;
+//		boolean validarPersona = false;
+//		boolean validarCredencial = false;
+//		String usuario = "";
+//		String contraseña = "";
+//
+//		p = new Persona();
+//
+//		do {
+//			System.out.println("Nombre");
+//			String nombre = in.nextLine().trim();
+//			p.setNombre(nombre);
+//			System.out.println("Email");
+//			String email = in.nextLine();
+//			p.setEmail(email);
+//			validarPersona = servPersona.validarPersona(p);
+//			if (validarPersona == false) {
+//				System.out.println("Nombre o email incorrectos");
+//			}
+//
+//		} while (!validarPersona);
+//		long idPersona = servPersona.insertarPersona(p);
+//
+//		c = new Credencial();
+//		do {
+//			System.out.println("Usuario");
+//			usuario = in.nextLine().trim();
+//			c.setUsuario(usuario);
+//			boolean validarContraseña = false;
+//			do {
+//				System.out.println("Contraseña");
+//				contraseña = in.nextLine().trim();
+//				validarContraseña = controlador.getServiciosCredencial().validarContraseña(contraseña);
+//				if (validarContraseña == false) {
+//					System.out.println(
+//							"La contraseña debe tener como mínimo 8 caractéres y que no tenga espacios en blanco");
+//				}
+//			} while (!validarContraseña);
+//			c.setPassword(contraseña);
+//			validarCredencial = Controlador.getServicios().getServiciosCredencial().validarCredencial(c);
+//			if (validarCredencial == false) {
+//				System.out.println("Usuario o contraseña incorrecto");
+//			}
+//		} while (!validarCredencial);
+//
+//		if (idPersona > 0) {
+//			c.setId_persona(idPersona);
+//			int insertar = controlador.getServiciosCredencial().insertar(usuario, contraseña, idPersona);
+//			if (insertar > 0) {
+//				System.out.println("Persona creada");
+//				System.out.println("Mensaje creado");
+//			} else {
+//				System.out.println("Error al insertar las credenciales");
+//			}
+//		} else {
+//			System.out.println("Error al insertar la persona");
+//		}
+//
+//		return p;
+//	}
 
 	/**
 	 * Método para insertar mensajes
 	 */
-	public void insertarMensaje() {
-		Scanner in = new Scanner(System.in);
-		Mensaje m = null;
-		long idEjemplar = 0;
-		boolean validarEjemplar = false;
-		boolean validarMensaje = false;
-
-		try {
-
-			System.out.println("Id del ejemplar ");
-			idEjemplar = in.nextLong();
-			in.nextLine();
-			if (idEjemplar < 7) {
-				System.out.println("Id de ejemplar no encontrado");
-			} else {
-				String mensaje = "";
-
-				do {
-					System.out.println("Introduce el mensaje: ");
-					mensaje = in.nextLine();
-					validarMensaje = servMensaje.validarMensaje(mensaje);
-					if (validarMensaje == false) {
-						System.out.println("Mensaje incorrecto");
-					} else {
-						validarMensaje = true;
-						String usuarioActual = controlador.getUsuarioActual();
-						long idUsuario = controlador.getServiciosPersona().personaAutenticada(usuarioActual);
-						m = new Mensaje(LocalDateTime.now(), mensaje, idEjemplar, idUsuario);
-						if (controlador.getServiciosMensaje().insertar(m) > 0) {
-							System.out.println("Mensaje añadido");
-							validarMensaje = true;
-						} else {
-							System.out.println("Mensaje no añadido");
-						}
-					}
-				} while (!validarMensaje);
-			}
-
-		} catch (InputMismatchException e) {
-			System.out.println("Debes introducir un número válido.");
-			in.nextLine();
-		}
-
-	}
+//	public void insertarMensaje() {
+//		Scanner in = new Scanner(System.in);
+//		Mensaje m = null;
+//		long idEjemplar = 0;
+//		boolean validarEjemplar = false;
+//		boolean validarMensaje = false;
+//
+//		try {
+//
+//			System.out.println("Id del ejemplar ");
+//			idEjemplar = in.nextLong();
+//			in.nextLine();
+//			if (idEjemplar < 7) {
+//				System.out.println("Id de ejemplar no encontrado");
+//			} else {
+//				String mensaje = "";
+//
+//				do {
+//					System.out.println("Introduce el mensaje: ");
+//					mensaje = in.nextLine();
+//					validarMensaje = servMensaje.validarMensaje(mensaje);
+//					if (validarMensaje == false) {
+//						System.out.println("Mensaje incorrecto");
+//					} else {
+//						validarMensaje = true;
+//						String usuarioActual = controlador.getUsuarioActual();
+//						long idUsuario = controlador.getServiciosPersona().personaAutenticada(usuarioActual);
+//						m = new Mensaje(LocalDateTime.now(), mensaje, idEjemplar, idUsuario);
+//						if (controlador.getServiciosMensaje().insertar(m) > 0) {
+//							System.out.println("Mensaje añadido");
+//							validarMensaje = true;
+//						} else {
+//							System.out.println("Mensaje no añadido");
+//						}
+//					}
+//				} while (!validarMensaje);
+//			}
+//
+//		} catch (InputMismatchException e) {
+//			System.out.println("Debes introducir un número válido.");
+//			in.nextLine();
+//		}
+//
+//	}
 
 	/**
 	 * Método para ver las plantas que hay en la base de datos
@@ -696,7 +697,7 @@ public class ViveroFachada {
 				if (validarCodigoPlanta == false) {
 					System.out.println("Codigo de planta no encontrado");
 				} else {
-					ArrayList<Ejemplar> ejemplares = servEjemplar.verEjemplares(codigoPlanta);
+					List<Ejemplar> ejemplares = servEjemplar.verEjemplares();
 					if (ejemplares.isEmpty()) {
 						System.out.println("No se ha encontrado ningún ejemplar");
 					} else {

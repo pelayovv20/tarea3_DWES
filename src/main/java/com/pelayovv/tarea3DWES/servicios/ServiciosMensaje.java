@@ -30,17 +30,17 @@ public class ServiciosMensaje {
     }
 	
 	 public ArrayList<Mensaje> verMensajesPlanta(String codigoPlanta) {
-	        List<Mensaje> mensajes = mensajerepo.findMensajesByPlanta(codigoPlanta);
+	        List<Mensaje> mensajes = mensajerepo.verMensajesPlanta(codigoPlanta);
 	        return new ArrayList<Mensaje>(mensajes);
 	    }
 	 
 	 public ArrayList<Mensaje> verMensajesEjemplar(long idEjemplar) {
-	        List<Mensaje> mensajes = mensajerepo.findMensajesByEjemplar(idEjemplar);
+	        List<Mensaje> mensajes = mensajerepo.verMensajesEjemplar(idEjemplar);
 	        return new ArrayList<Mensaje>(mensajes);
 	    }
 	 
 	 public ArrayList<Mensaje> verMensajesPersona(long idPersona) {
-	        List<Mensaje> mensajes = mensajerepo.findMensajesByPersona(idPersona);
+	        List<Mensaje> mensajes = mensajerepo.verMensajesPersona(idPersona);
 	        return new ArrayList<Mensaje>(mensajes);
 	    }
 }

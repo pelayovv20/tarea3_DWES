@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.lang.NonNull;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -26,7 +28,8 @@ public class Ejemplar implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column
+	@NonNull
 	private String nombre;
 	
 	@ManyToOne

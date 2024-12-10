@@ -43,7 +43,7 @@ public class ServiciosPlanta {
 	}
 	
 	public boolean existeCodigo(String codigo) {
-		return plantarepo.existsByCodigo(codigo);
+		return plantarepo.codigoExistente(codigo);
 	}
 	
 	public void insertarPlanta(Planta p) {
@@ -51,16 +51,16 @@ public class ServiciosPlanta {
 	}
 	
 	public List<Planta> verPlantas(){
-		return plantarepo.findAllByNombrecomun();
+		return plantarepo.findAll();
 	}
 	
 	public Planta verPorCodigo(String codigo) {
-		Optional<Planta> plantas = plantarepo.findByCodigo(codigo);
+		Optional<Planta> plantas = plantarepo.verPorCodigo(codigo);
 		return plantas.orElse(null);
 	}
 	
 	public boolean modificarNombreComun(String codigo, String nombrecomun) {
-		Optional<Planta> plantas = plantarepo.findByCodigo(codigo);
+		Optional<Planta> plantas = plantarepo.verPorCodigo(codigo);
 		Planta p = new Planta();
 		if (!plantas.isPresent()) {
 			return false;
@@ -74,7 +74,7 @@ public class ServiciosPlanta {
 	}
 	
 	public boolean modificarNombreCientifico(String codigo, String nombrecientifico) {
-		Optional<Planta> plantas = plantarepo.findByCodigo(codigo);
+		Optional<Planta> plantas = plantarepo.verPorCodigo(codigo);
 		Planta p = new Planta();
 		if (!plantas.isPresent()) {
 			return false;
