@@ -116,6 +116,7 @@ public class Planta implements Serializable {
 		ret += "Codigo de planta: " + this.codigo;
 		ret += "\nNombre científico: " + this.nombrecientifico;
 		ret += "\nNombre común: " + this.nombrecomun;
+		ret += "\n----------------------------------";
 		return ret;
 	}
 

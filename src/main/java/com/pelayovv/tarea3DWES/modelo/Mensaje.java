@@ -96,8 +96,14 @@ public class Mensaje implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Mensaje [id=" + id + ", fechahora=" + fechahora + ", mensaje=" + mensaje + ", ejemplar=" + ejemplar
-				+ ", persona=" + persona + "]";
+		String ret = "";
+		ret += "Id: " + this.id;
+		ret += "\nFecha y hora: " + this.fechahora;
+		ret += "\nMensaje: " + this.mensaje;
+		ret += "\nId de ejemplar: " + this.ejemplar;
+		ret += "\nId persona: " + this.persona;
+		ret += "\n--------------------------";
+		return ret;
 	}
 
 	@Override
