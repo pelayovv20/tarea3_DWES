@@ -11,9 +11,11 @@ import jakarta.transaction.Transactional;
 
 @Repository
 public interface CredencialRepository extends JpaRepository<Credencial,Long>{
-	@Transactional
-	@Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Credenciales c WHERE c.usuario = :usuario AND c.password = :password")
-	boolean usuarioExistente(@Param("usuario") String usuario, @Param("password") String password);
 	
 	boolean existsByUsuario(String usuario);
+	
+	@Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Credencial c WHERE c.usuario = :usuario AND c.password = :password")
+	boolean existsByUsuarioAndPassword(@Param("usuario") String usuario, @Param("password") String password);
+	
+	
 }

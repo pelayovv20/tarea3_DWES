@@ -46,9 +46,8 @@ public class Mensaje implements Serializable{
 		
 	}
 
-	public Mensaje(Long id, LocalDateTime fechahora, String mensaje, Ejemplar ejemplar, Persona persona) {
+	public Mensaje( LocalDateTime fechahora, String mensaje, Ejemplar ejemplar, Persona persona) {
 		super();
-		this.id = id;
 		this.fechahora = fechahora;
 		this.mensaje = mensaje;
 		this.ejemplar = ejemplar;

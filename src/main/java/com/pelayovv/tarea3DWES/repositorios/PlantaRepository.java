@@ -14,17 +14,8 @@ import com.pelayovv.tarea3DWES.modelo.Planta;
 import jakarta.transaction.Transactional;
 
 @Repository
-
 public interface PlantaRepository extends JpaRepository <Planta, Long> {
 
-	
-	
-	Optional<Planta> verPorCodigo(String codigo);
-	
-	
-	
-	boolean codigoExistente(String codigo);
-	
 	@Transactional
 	@Modifying
 	@Query("UPDATE Planta p SET p.nombrecomun = :nombrecomun WHERE p.codigo = :codigo")
@@ -35,5 +26,9 @@ public interface PlantaRepository extends JpaRepository <Planta, Long> {
 	@Query("UPDATE Planta p SET p.nombrecientifico = :nombrecientifico WHERE p.codigo = :codigo")
 	boolean modificarNombrecientifico(@Param("codigo") String codigo, @Param("nombrecientifico") String nombrecientifico);
 	
+	Optional<Planta> findByCodigo(String codigo);
+	
+	
+	boolean existsByCodigo(String codigo);
 	
 	}

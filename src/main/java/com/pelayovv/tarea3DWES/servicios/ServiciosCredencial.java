@@ -10,14 +10,20 @@ import com.pelayovv.tarea3DWES.repositorios.PersonaRepository;
 
 @Service
 public class ServiciosCredencial {
+	
 @Autowired
 CredencialRepository credencialrepo;
+
 @Autowired
 PersonaRepository personarepo;
 
 public boolean validarCredencial(Credencial c) {
 	if (c == null) {
 		return false;
+	}
+	if (!c.getUsuario().matches("^[^\s]+$")){
+		return false;
+		
 	}
 	if (c.getUsuario() == null || c.getUsuario().isEmpty()) {
 		return false;
@@ -28,8 +34,22 @@ public boolean validarCredencial(Credencial c) {
 	return true;
 }
 
+public boolean validarUsuario(String usuario) {
+	if (!usuario.matches("^[^\s]+$")) {
+		return false;
+	}
+	return true;
+}
+public boolean validarContraseña(String contraseña) {
+	if (!contraseña.matches("^(?=\\S+$).{8,}$")) {
+		return false;
+	}
+
+	return true;
+}
+
 public boolean autenticarUsuario(String usuario, String password) {
-    return credencialrepo.usuarioExistente(usuario, password);
+    return credencialrepo.existsByUsuarioAndPassword(usuario, password);
     }
 
 public boolean existeUsuario(String usuario) {

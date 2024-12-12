@@ -38,16 +38,15 @@ public class Persona implements Serializable{
 	@OneToOne(mappedBy = "persona", cascade= CascadeType.ALL)
 	private Credencial credenciales;
 
-	@OneToMany(mappedBy = "persona")
+	@OneToMany(mappedBy = "persona", cascade = CascadeType.ALL)
 	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
 
 	public Persona() {
 
 	}
 
-	public Persona(Long id,String nombre, String email) {
+	public Persona(String nombre, String email) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.email = email;
 	}
@@ -94,13 +93,13 @@ public class Persona implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Persona [id=" + id + ", nombre=" + nombre + ", email=" + email + ", credenciales=" + credenciales
-				+ ", mensajes=" + mensajes + "]";
+		return "Persona [id=" + id + ", nombre=" + nombre + ", email=" + email + ", usuario=" + credenciales.getUsuario()
+				+ ", contraseña=" + credenciales.getPassword() + "]";
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(credenciales, email, id, nombre);
+		return Objects.hash(credenciales, email, id, mensajes, nombre);
 	}
 
 	@Override
@@ -113,8 +112,11 @@ public class Persona implements Serializable{
 			return false;
 		Persona other = (Persona) obj;
 		return Objects.equals(credenciales, other.credenciales) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
+				&& Objects.equals(id, other.id) && Objects.equals(mensajes, other.mensajes)
+				&& Objects.equals(nombre, other.nombre);
 	}
+
+	
 
 	
 	

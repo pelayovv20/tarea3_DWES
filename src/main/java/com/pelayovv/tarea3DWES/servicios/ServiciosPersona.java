@@ -32,7 +32,7 @@ public class ServiciosPersona {
 	}
 	
 	public boolean existeEmail(String email) {
-        return personarepo.emailExistente(email);
+        return personarepo.existsByEmail(email);
     }
 	
 	public long personaAutenticada(String usuario) {
@@ -49,7 +49,7 @@ public class ServiciosPersona {
     }
     
     public Persona verPorNombre(String nombre){
-    	return personarepo.verPorNombre(nombre);
+    	return personarepo.findByNombreContainingIgnoreCase(nombre);
     }
 	
 }

@@ -10,15 +10,14 @@ import com.pelayovv.tarea3DWES.modelo.Persona;
 import jakarta.transaction.Transactional;
 
 @Repository
-
 public interface PersonaRepository extends JpaRepository<Persona, Long>{
 
 	@Transactional
-	@Query("SELECT c.persona.id FROM Credenciales c WHERE c.usuario = :usuario")
+	@Query("SELECT c.persona.id FROM Credencial c WHERE c.usuario = :usuario")
 	Long personaAutenticada(@Param("usuario") String usuario);
 	
-	Persona verPorNombre(String nombre);
+	Persona findByNombreContainingIgnoreCase(String nombre);
 	
-	boolean emailExistente(String email);
+	boolean existsByEmail(String email);
 	
 }

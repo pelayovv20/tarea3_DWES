@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.pelayovv.tarea3DWES.modelo.Planta;
 import com.pelayovv.tarea3DWES.repositorios.PlantaRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class ServiciosPlanta {
 
@@ -22,12 +24,13 @@ public class ServiciosPlanta {
 			return false;
 		}
 
-		if (p.getNombrecomun() == null || p.getNombrecomun().isEmpty()) {
+		if (p.getNombreComun() == null || p.getNombreComun().isEmpty()) {
 			return false;
 		}
-		if (p.getNombrecientifico() == null || p.getNombrecientifico().isEmpty()) {
+		if (p.getNombreCientifico() == null || p.getNombreCientifico().isEmpty()) {
 			return false;
 		}
+		
 		return true;
 	}
 	
@@ -38,12 +41,15 @@ public class ServiciosPlanta {
 		} else if (!codigoPlanta.matches("^[a-zA-Z]+$")) {
 			return false;
 		} 
+		if (existeCodigo(codigoPlanta)) {
+			return false;
+		}
 
 		return true;
 	}
 	
 	public boolean existeCodigo(String codigo) {
-		return plantarepo.codigoExistente(codigo);
+		return plantarepo.existsByCodigo(codigo);
 	}
 	
 	public void insertarPlanta(Planta p) {
@@ -55,32 +61,33 @@ public class ServiciosPlanta {
 	}
 	
 	public Planta verPorCodigo(String codigo) {
-		Optional<Planta> plantas = plantarepo.verPorCodigo(codigo);
+		Optional<Planta> plantas = plantarepo.findByCodigo(codigo);
 		return plantas.orElse(null);
 	}
 	
+	@Transactional
 	public boolean modificarNombreComun(String codigo, String nombrecomun) {
-		Optional<Planta> plantas = plantarepo.verPorCodigo(codigo);
+		Optional<Planta> plantas = plantarepo.findByCodigo(codigo);
 		Planta p = new Planta();
 		if (!plantas.isPresent()) {
 			return false;
 		}else {
 			p = plantas.get();
-			p.setNombrecomun(nombrecomun);
+			p.setNombreComun(nombrecomun);
 			plantarepo.saveAndFlush(p);
 			return true;
 		}
 
 	}
-	
+	@Transactional
 	public boolean modificarNombreCientifico(String codigo, String nombrecientifico) {
-		Optional<Planta> plantas = plantarepo.verPorCodigo(codigo);
+		Optional<Planta> plantas = plantarepo.findByCodigo(codigo);
 		Planta p = new Planta();
 		if (!plantas.isPresent()) {
 			return false;
 		}else {
 			p = plantas.get();
-			p.setNombrecientifico(nombrecientifico);
+			p.setNombreCientifico(nombrecientifico);
 			plantarepo.saveAndFlush(p);
 			return true;
 		}

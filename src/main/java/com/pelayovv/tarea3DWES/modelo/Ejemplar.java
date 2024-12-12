@@ -39,58 +39,94 @@ public class Ejemplar implements Serializable{
 	@OneToMany(mappedBy = "ejemplar",cascade=CascadeType.ALL)
 	private List<Mensaje> mensajes = new LinkedList<Mensaje>();
 	
-	public Ejemplar() {
+public Ejemplar() {
 		
 	}
 
-	public Ejemplar(Long id,String nombre, Planta planta) {
-		super();
-		this.id = id;
+
+
+	public Ejemplar(String nombre, Planta planta) {
 		this.nombre = nombre;
 		this.planta = planta;
 	}
+
+
 
 	public Long getId() {
 		return id;
 	}
 
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
 
 	public String getNombre() {
 		return nombre;
 	}
 
+
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+
 
 	public Planta getPlanta() {
 		return planta;
 	}
 
+
+
 	public void setPlanta(Planta planta) {
 		this.planta = planta;
 	}
+	
+
+
+
+
 
 	public List<Mensaje> getMensajes() {
 		return mensajes;
 	}
 
+
+
 	public void setMensajes(List<Mensaje> mensajes) {
 		this.mensajes = mensajes;
 	}
 
+
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+
+
 	@Override
 	public String toString() {
-		return "Ejemplar [id=" + id + ", nombre=" + nombre + ", planta=" + planta + ", mensajes=" + mensajes + "]";
+		String ret = "";
+		ret += "Id de ejemplar: " + this.id;
+		ret += "\nNombre de ejemplar: " + this.nombre;
+		ret += "\nCodigo de planta: " + this.planta.getCodigo();
+		return ret;
 	}
+
+
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, mensajes, nombre, planta);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -104,7 +140,6 @@ public class Ejemplar implements Serializable{
 		return Objects.equals(id, other.id) && Objects.equals(mensajes, other.mensajes)
 				&& Objects.equals(nombre, other.nombre) && Objects.equals(planta, other.planta);
 	}
-
 	
 
 	

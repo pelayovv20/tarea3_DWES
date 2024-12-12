@@ -44,9 +44,8 @@ public class Credencial implements Serializable{
 
 
 
-	public Credencial(Long id,String usuario, String password) {
+	public Credencial(String usuario, String password) {
 		super();
-		this.id = id;
 		this.usuario = usuario;
 		this.password = password;
 		 
@@ -112,7 +111,7 @@ public class Credencial implements Serializable{
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, password, usuario);
+		return Objects.hash(id, password, persona, usuario);
 	}
 
 
@@ -127,8 +126,12 @@ public class Credencial implements Serializable{
 			return false;
 		Credencial other = (Credencial) obj;
 		return Objects.equals(id, other.id) && Objects.equals(password, other.password)
-				&& Objects.equals(usuario, other.usuario);
+				&& Objects.equals(persona, other.persona) && Objects.equals(usuario, other.usuario);
 	}
+
+
+
+	
 
 
 

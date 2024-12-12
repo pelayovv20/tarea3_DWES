@@ -10,6 +10,7 @@ import org.springframework.lang.NonNull;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -48,13 +49,17 @@ public class Planta implements Serializable {
 		
 	}
 
-	public Planta(Long id,String codigo, String nombrecomun, String nombrecientifico) {
+	
+	
+	public Planta(String codigo, String nombrecomun, String nombrecientifico, List<Ejemplar> ejemplares) {
 		super();
-		this.id = id;
 		this.codigo = codigo;
 		this.nombrecomun = nombrecomun;
 		this.nombrecientifico = nombrecientifico;
+		this.ejemplares = ejemplares;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -64,29 +69,35 @@ public class Planta implements Serializable {
 		this.id = id;
 	}
 
+	
 	public String getCodigo() {
 		return codigo;
 	}
+
+
 
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
 
-	public String getNombrecomun() {
+
+
+	public String getNombreComun() {
 		return nombrecomun;
 	}
 
-	public void setNombrecomun(String nombrecomun) {
-		this.nombrecomun = nombrecomun;
+	public void setNombreComun(String nombreComun) {
+		this.nombrecomun = nombreComun;
 	}
 
-	public String getNombrecientifico() {
+	public String getNombreCientifico() {
 		return nombrecientifico;
 	}
 
-	public void setNombrecientifico(String nombrecientifico) {
-		this.nombrecientifico = nombrecientifico;
+	public void setNombreCientifico(String nombreCientifico) {
+		this.nombrecientifico = nombreCientifico;
 	}
+	
 
 	public List<Ejemplar> getEjemplares() {
 		return ejemplares;
@@ -95,19 +106,27 @@ public class Planta implements Serializable {
 	public void setEjemplares(List<Ejemplar> ejemplares) {
 		this.ejemplares = ejemplares;
 	}
+
+
 	
-	
-	
+
 	@Override
 	public String toString() {
-		return "Planta [id=" + id + ", codigo=" + codigo + ", nombrecomun=" + nombrecomun + ", nombrecientifico="
-				+ nombrecientifico + ", ejemplares=" + ejemplares + "]";
+		String ret = "";
+		ret += "Codigo de planta: " + this.codigo;
+		ret += "\nNombre científico: " + this.nombrecientifico;
+		ret += "\nNombre común: " + this.nombrecomun;
+		return ret;
 	}
+
+
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo, ejemplares, id, nombrecientifico, nombrecomun);
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -122,7 +141,6 @@ public class Planta implements Serializable {
 				&& Objects.equals(id, other.id) && Objects.equals(nombrecientifico, other.nombrecientifico)
 				&& Objects.equals(nombrecomun, other.nombrecomun);
 	}
-
 	
 
 	
