@@ -14,7 +14,7 @@ public interface CredencialRepository extends JpaRepository<Credencial,Long>{
 	
 	boolean existsByUsuario(String usuario);
 	
-	@Query("SELECT CASE WHEN COUNT(c) > 0 THEN true ELSE false END FROM Credencial c WHERE c.usuario = :usuario AND c.password = :password")
+	@Query("SELECT COUNT(c) > 0 FROM Credencial c WHERE c.usuario = :usuario AND c.password = :password")
 	boolean existsByUsuarioAndPassword(@Param("usuario") String usuario, @Param("password") String password);
 	
 	

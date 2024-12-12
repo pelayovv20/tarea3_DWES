@@ -391,7 +391,7 @@ public class ViveroFachada {
 					menuVerMensajes();
 					break;
 				case 2:
-					//insertarMensaje();
+					insertarMensaje();
 					break;
 				case 3:
 					System.out.println("Saliendo del menú de Mensajes");
@@ -503,49 +503,50 @@ public class ViveroFachada {
 	 * Método para insertar un ejemplar con su mensaje correspondiente
 	 * 
 	 */
-	public Ejemplar insertarEjemplarMensaje() {
+	public void insertarEjemplarMensaje() {
 		Scanner in = new Scanner(System.in);
 		
-		Ejemplar e = null;
+		verPlantas();
+		System.out.println();
+		System.out.println();
 		Mensaje m;
 		Planta p;
 		Persona pers;
-		boolean correcto = false;
-		boolean validarPlanta = false;
-		do {
-			
+		boolean validarPlanta;
+		String codigoPlanta;
+		try {
+			do {
 			System.out.println("Codigo de planta");
-			String codigoPlanta = in.nextLine().trim().toUpperCase();
+		 codigoPlanta = in.nextLine().trim().toUpperCase();
 			validarPlanta = servPlanta.existeCodigo(codigoPlanta);
-			if (validarPlanta == true) {
-				e.getPlanta().setCodigo(codigoPlanta);
-				e.setNombre(codigoPlanta);
-				correcto = true;
-
-			} else if (validarPlanta == false) {
+			
+		
+			 if (!validarPlanta ) {
 				System.out.println("Codigo de planta incorrecto");
-				continue;
-			}
-		
-		p = servPlanta.verPorCodigo(codigoPlanta);
-		e = new Ejemplar();
-		 
-		
-			e.setPlanta(p);
-			e.setNombre(e.getPlanta().getCodigo() + "_" + e.getId());
-			servEjemplar.insertarEjemplar(e);
-			servEjemplar.cambiarNombreEjemplar(e.getId(), e.getNombre());
-			String mensaje = "Añadido el ejemplar " + e.getNombre();
-			LocalDateTime fechaHora = LocalDateTime.now();
-			String usuarioActual = controlador.getUsuarioActual();
-			pers = servPersona.verPorNombre(usuarioActual);
-			m = new Mensaje(fechaHora, mensaje, e, pers);
-			servMensaje.insertarMensaje(m);
-				System.out.println("Mensaje añadido correctamente.");
-			
-			
-	} while (!correcto);
-		return e;
+				
+				
+			} 
+			}while(!validarPlanta);
+				p = servPlanta.verPorCodigo(codigoPlanta);
+				Ejemplar e = new Ejemplar();
+				e.setPlanta(p);
+				
+					servEjemplar.insertarEjemplar(e);
+					String nuevoNombre = p.getCodigo() + " _ " + e.getId();
+					servEjemplar.cambiarNombreEjemplar(e.getId(), nuevoNombre);
+					String mensaje = "Añadido el ejemplar " + nuevoNombre;
+					System.out.println("Ejemplar creado");
+					LocalDateTime fechaHora = LocalDateTime.now();
+					String usuarioActual = controlador.getUsuarioActual();
+					pers = servPersona.verPorNombre(usuarioActual);
+					m = new Mensaje(fechaHora, mensaje, e, pers);
+					servMensaje.insertarMensaje(m);
+						System.out.println("Mensaje añadido correctamente.");
+					
+		} catch (Exception ex) {
+			System.out.println("Error al insertar el ejemplar: " + ex.getMessage());
+		}
+	
 	}
 
 	/**
@@ -564,6 +565,7 @@ public class ViveroFachada {
 
 		p = new Persona();
 
+		try {
 		do {
 			System.out.println("Nombre");
 			String nombre = in.nextLine().trim();
@@ -615,6 +617,9 @@ public class ViveroFachada {
 			
 		servPersona.insertarPersona(p);
 		System.out.println("Persona creada");
+		} catch (Exception ex) {
+			System.out.println("Error al insertar la persona: " + ex.getMessage());
+		}
 
 		return p;
 	}
@@ -622,57 +627,65 @@ public class ViveroFachada {
 	/**
 	 * Método para insertar mensajes
 	 */
-//	public void insertarMensaje() {
-//		Scanner in = new Scanner(System.in);
-//		Mensaje m = null;
-//		long idEjemplar = 0;
-//		boolean validarEjemplar = false;
-//		boolean validarMensaje = false;
-//
-//		try {
-//
-//			System.out.println("Id del ejemplar ");
-//			idEjemplar = in.nextLong();
-//			in.nextLine();
-//			if (idEjemplar < 7) {
-//				System.out.println("Id de ejemplar no encontrado");
-//			} else {
-//				String mensaje = "";
-//
-//				do {
-//					System.out.println("Introduce el mensaje: ");
-//					mensaje = in.nextLine();
-//					validarMensaje = servMensaje.validarMensaje(mensaje);
-//					if (validarMensaje == false) {
-//						System.out.println("Mensaje incorrecto");
-//					} else {
-//						validarMensaje = true;
-//						String usuarioActual = controlador.getUsuarioActual();
-//						long idUsuario = controlador.getServiciosPersona().personaAutenticada(usuarioActual);
-//						m = new Mensaje(LocalDateTime.now(), mensaje, idEjemplar, idUsuario);
-//						if (controlador.getServiciosMensaje().insertar(m) > 0) {
-//							System.out.println("Mensaje añadido");
-//							validarMensaje = true;
-//						} else {
-//							System.out.println("Mensaje no añadido");
-//						}
-//					}
-//				} while (!validarMensaje);
-//			}
-//
-//		} catch (InputMismatchException e) {
-//			System.out.println("Debes introducir un número válido.");
-//			in.nextLine();
-//		}
-//
-//	}
+	public void insertarMensaje() {
+		
+		verEjemplares();
+		System.out.println();
+		System.out.println();
+		Scanner in = new Scanner(System.in);
+		Mensaje m = null;
+		long idEjemplar = 0;
+		Persona pers;
+		;
+		boolean validarEjemplar = false;
+		boolean validarMensaje = false;
+
+		try {
+
+			System.out.println("Id del ejemplar ");
+			idEjemplar = in.nextLong();
+			in.nextLine();
+			if (idEjemplar < 6) {
+				System.out.println("Id de ejemplar no encontrado");
+			} else {
+				Ejemplar e = servEjemplar.verPorId(idEjemplar);
+				if (e == null) {
+					System.out.println("Id de ejemplar no encontrado");
+				}
+				String mensaje = "";
+				
+				do {
+					System.out.println("Introduce el mensaje: ");
+					mensaje = in.nextLine();
+					validarMensaje = servMensaje.validarMensaje(mensaje);
+					if (validarMensaje == false) {
+						System.out.println("Mensaje incorrecto");
+					} else {
+						validarMensaje = true;
+						String usuarioActual = controlador.getUsuarioActual();
+						pers = servPersona.verPorNombre(usuarioActual);
+						m = new Mensaje(LocalDateTime.now(), mensaje, e, pers);
+						servMensaje.insertarMensaje(m);
+							System.out.println("Mensaje añadido");
+							
+						
+					}
+				} while (!validarMensaje);
+			}
+
+		} catch (InputMismatchException ex) {
+			System.out.println("Debes introducir un número válido.");
+			in.nextLine();
+		}
+
+	}
 
 	/**
 	 * Método para ver las plantas que hay en la base de datos
 	 */
 	public void verPlantas() {
 		Scanner in = new Scanner(System.in);
-		
+		try {
 			ArrayList<Planta> plantas = (ArrayList<Planta>) servPlanta.verPlantas();
 
 			if (plantas == null || plantas.isEmpty()) {
@@ -684,6 +697,10 @@ public class ViveroFachada {
 					System.out.println(p);
 				}
 			}
+		} catch (Exception e) {
+			System.out.println("Error " + e.getMessage());
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -693,6 +710,9 @@ public class ViveroFachada {
 	public void verEjemplares() {
 		Scanner in = new Scanner(System.in);
 		verPlantas();
+		System.out.println();
+
+
 		boolean validarCodigoPlanta = false;
 		try {
 			do {
@@ -702,8 +722,8 @@ public class ViveroFachada {
 				if (validarCodigoPlanta == false) {
 					System.out.println("Codigo de planta no encontrado");
 				} else {
-					List<Ejemplar> ejemplares = servEjemplar.verEjemplares();
-					if (ejemplares.isEmpty()) {
+					ArrayList<Ejemplar> ejemplares = servEjemplar.ejemplaresPorTipoPlanta(codigoPlanta);
+					if (ejemplares == null||ejemplares.isEmpty()) {
 						System.out.println("No se ha encontrado ningún ejemplar");
 					} else {
 						System.out.println("Ejemplares con el código " + codigoPlanta + ":");
@@ -749,6 +769,9 @@ public class ViveroFachada {
 	 */
 	public void verMensajesEjemplar() {
 		Scanner in = new Scanner(System.in);
+		verEjemplares();
+		System.out.println();
+		System.out.println();
 		long idEjemplar = 0;
 
 		try {
@@ -756,10 +779,10 @@ public class ViveroFachada {
 				System.out.print("Id del ejemplar: ");
 				idEjemplar = in.nextLong();
 
-				if (idEjemplar < 7) {
+				if (idEjemplar < 6) {
 					System.out.println("ID de ejemplar no encontrado");
 				}
-			} while (idEjemplar < 7);
+			} while (idEjemplar < 6);
 		} catch (Exception e) {
 			System.out.println("Error: debe ingresar un número válido.");
 			in.next();
@@ -782,6 +805,7 @@ public class ViveroFachada {
 	 */
 	public void verMensajesPersona() {
 		Scanner in = new Scanner(System.in);
+		verPersonas();
 		long idPersona = -1;
 
 		try {
@@ -789,7 +813,7 @@ public class ViveroFachada {
 				System.out.print("Id de la persona: ");
 				idPersona = in.nextLong();
 
-				if (idPersona != 0 && idPersona < 5) {
+				if (idPersona <0) {
 					System.out.println("ID de persona no encontrado");
 				} else {
 					ArrayList<Mensaje> mensajes = servMensaje.verMensajesPersona(idPersona);
@@ -815,6 +839,7 @@ public class ViveroFachada {
 	 */
 	public void verMensajesPlanta() {
 		Scanner in = new Scanner(System.in);
+		verPlantas();
 		boolean validarCodigoPlanta = false;
 
 		try {

@@ -24,8 +24,8 @@ public class ServiciosEjemplar {
 		ejemplarrepo.saveAndFlush(e);
 	}
 	
-	public List<Ejemplar> verEjemplares(){
-		return ejemplarrepo.findAll();
+	public ArrayList<Ejemplar> verEjemplares(){
+		return (ArrayList<Ejemplar>) ejemplarrepo.findAll();
 	}
 	
 	public Ejemplar verPorId(long idEjemplar) {
@@ -33,13 +33,10 @@ public class ServiciosEjemplar {
         return ejemplares.orElse(null);
     }
 	
-	 
+	@Transactional
 	    public boolean cambiarNombreEjemplar(long idejemplar, String nombre) {
-	        boolean nombrenuevo = ejemplarrepo.cambiarNombreEjemplar(idejemplar, nombre);
-	        if (nombrenuevo=false) {
-	        	return false;
-	        }
-			return nombrenuevo;
+	        int nombrenuevo = ejemplarrepo.cambiarNombreEjemplar(idejemplar, nombre);
+	        return nombrenuevo>0;
 	        
 	    }
 	 
